@@ -5,9 +5,9 @@ var rateLimit = require('express-rate-limit');
 var Feedback = require('../models/Feedback');
 
 var submitLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5,
-  message: 'Too many submissions from this device. Please try again later.',
+  windowMs: 10 * 60 * 1000,
+  max: 10,
+  message: 'We Have Had Too Many Submissions In A Short Amount Of Time. Please Try Again After 10 Minutes.',
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -43,12 +43,12 @@ var validationRules = [
   body('name')
     .optional({ checkFalsy: true })
     .trim()
-    .isLength({ max: 100 }).withMessage('Name is too long'),
+    .isLength({ max: 50 }).withMessage('Name is too long'),
   
   body('betterId')
     .optional({ checkFalsy: true })
     .trim()
-    .isLength({ max: 50 }).withMessage('Better ID is too long'),
+    .isLength({ max: 30 }).withMessage('Better ID is too long'),
   
   body('consent')
     .notEmpty().withMessage('You must agree to the privacy policy')

@@ -1,2 +1,9 @@
-.env
 node_modules/
+.env
+npm-debug.log
+.DS_Store
+qr-code.png
+qr-code-large.png
+*.log
+.vscode/
+.idea/

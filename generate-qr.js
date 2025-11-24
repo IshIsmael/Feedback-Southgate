@@ -1,7 +1,7 @@
 const QRCode = require('qrcode');
 const fs = require('fs');
 
-const url = 'https://your-app-name.onrender.com';
+const url = 'https://southgate-leisure-centre-feedback.onrender.com';
 
 async function generateQR() {
   try {
@@ -12,7 +12,7 @@ async function generateQR() {
       margin: 2,
       width: 500,
       color: {
-        dark: '#2A5220',
+        dark: '#000000',
         light: '#FFFFFF'
       }
     });
@@ -24,7 +24,7 @@ async function generateQR() {
       margin: 2,
       width: 1000,
       color: {
-        dark: '#2A5220',
+        dark: '#000000',
         light: '#FFFFFF'
       }
     });
