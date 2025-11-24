@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Better Southgate</title>
+    <link rel='stylesheet' href='/stylesheets/staff.css' />
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-circle">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" fill="#73B14B"/>
+                        <path d="M20 15V25M15 20H25" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1>Staff Portal</h1>
+                <p>Better Southgate Leisure Centre</p>
+            </div>
+
+            <form action="/staff/login" method="POST" class="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        autofocus
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <% if (error) { %>
+                    <div class="error-alert">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 10a1 1 0 110-2 1 1 0 010 2zm1-3.5V4a1 1 0 10-2 0v3.5a1 1 0 102 0z"/>
+                        </svg>
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <button type="submit" class="login-btn">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <a href="/">← Back to Feedback Form</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Feedback - Better Southgate</title>
+    <link rel='stylesheet' href='/stylesheets/staff.css' />
+</head>
+<body class="dashboard-page">
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <div class="logo-small">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" fill="#73B14B"/>
+                        <path d="M20 15V25M15 20H25" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="nav-title">
+                    <h2>Better Southgate</h2>
+                    <span>Feedback Portal</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="/staff/dashboard" class="nav-link">Dashboard</a>
+                <a href="/staff/logout" class="logout-btn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor">
+                        <path d="M7 13L11 9L7 5M11 9H1M11 1H15C15.5304 1 16.0391 1.21071 16.4142 1.58579C16.7893 1.96086 17 2.46957 17 3V15C17 15.5304 16.7893 16.0391 16.4142 16.4142C16.0391 16.7893 15.5304 17 15 17H11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="feedback-page-header">
+            <div>
+                <h1>All Feedback</h1>
+                <p class="subtitle">View and filter customer feedback</p>
+            </div>
+            <div class="header-actions">
+                <span class="result-count"><%= feedback.length %> results</span>
+                <button onclick="window.print()" class="export-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Print
+                </button>
+            </div>
+        </div>
+
+        <div class="filters-panel">
+            <form action="/staff/feedback" method="GET" class="filters-form">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>Activity</label>
+                        <select name="activity" onchange="this.form.submit()">
+                            <option value="all" <%= filters.activity === 'all' ? 'selected' : '' %>>All Activities</option>
+                            <% activities.forEach(function(activity) { %>
+                                <option value="<%= activity %>" <%= filters.activity === activity ? 'selected' : '' %>>
+                                    <%= activity %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Rating</label>
+                        <select name="rating" onchange="this.form.submit()">
+                            <option value="all" <%= filters.rating === 'all' ? 'selected' : '' %>>All Ratings</option>
+                            <option value="5" <%= filters.rating === '5' ? 'selected' : '' %>>😊 Great (5)</option>
+                            <option value="3" <%= filters.rating === '3' ? 'selected' : '' %>>😐 Okay (3)</option>
+                            <option value="1" <%= filters.rating === '1' ? 'selected' : '' %>>😞 Poor (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Sort By</label>
+                        <select name="sort" onchange="this.form.submit()">
+                            <option value="newest" <%= filters.sort === 'newest' ? 'selected' : '' %>>Newest First</option>
+                            <option value="oldest" <%= filters.sort === 'oldest' ? 'selected' : '' %>>Oldest First</option>
+                            <option value="highest" <%= filters.sort === 'highest' ? 'selected' : '' %>>Highest Rated</option>
+                            <option value="lowest" <%= filters.sort === 'lowest' ? 'selected' : '' %>>Lowest Rated</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Start Date</label>
+                        <input type="date" name="startDate" value="<%= filters.startDate %>" onchange="this.form.submit()">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>End Date</label>
+                        <input type="date" name="endDate" value="<%= filters.endDate %>" onchange="this.form.submit()">
+                    </div>
+                </div>
+
+                <div class="search-row">
+                    <div class="search-group">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <input 
+                            type="text" 
+                            name="search" 
+                            placeholder="Search comments..." 
+                            value="<%= filters.search %>"
+                        >
+                    </div>
+                    <button type="submit" class="search-btn">Search</button>
+                    <% if (filters.activity !== 'all' || filters.rating !== 'all' || filters.search !== '' || filters.startDate !== '' || filters.endDate !== '' || filters.sort !== 'newest') { %>
+                        <a href="/staff/feedback" class="clear-filters-btn">Clear Filters</a>
+                    <% } %>
+                </div>
+            </form>
+        </div>
+
+        <div class="feedback-grid">
+            <% if (feedback.length === 0) { %>
+                <div class="empty-state-large">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" opacity="0.3">
+                        <circle cx="11" cy="11" r="8" stroke-width="2"/>
+                        <path d="M21 21l-4.35-4.35" stroke-width="2"/>
+                    </svg>
+                    <h3>No feedback found</h3>
+                    <p>Try adjusting your filters or search terms</p>
+                    <a href="/staff/feedback" class="btn-secondary">Clear all filters</a>
+                </div>
+            <% } else { %>
+                <% feedback.forEach(function(item) { %>
+                    <div class="feedback-card-large">
+                        <div class="feedback-card-header">
+                            <div class="feedback-meta-large">
+                                <span class="feedback-id">#<%= item._id.toString().slice(-6) %></span>
+                                <span class="feedback-activity-tag"><%= item.activity %></span>
+                            </div>
+                            <div class="feedback-rating-large rating-<%= item.rating %>">
+                                <% if (item.rating === 5) { %>
+                                    <span class="emoji-large">😊</span>
+                                    <span class="rating-text">Great</span>
+                                <% } else if (item.rating === 3) { %>
+                                    <span class="emoji-large">😐</span>
+                                    <span class="rating-text">Okay</span>
+                                <% } else { %>
+                                    <span class="emoji-large">😞</span>
+                                    <span class="rating-text">Poor</span>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="feedback-body">
+                            <p class="feedback-comment-large"><%= item.comments %></p>
+                        </div>
+
+                        <div class="feedback-footer">
+                            <div class="feedback-details">
+                                <% if (item.name) { %>
+                                    <span class="detail-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-width="2"/>
+                                        </svg>
+                                        <%= item.name %>
+                                    </span>
+                                <% } %>
+                                <% if (item.email) { %>
+                                    <span class="detail-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                                            <polyline points="22,6 12,13 2,6" stroke-width="2"/>
+                                        </svg>
+                                        <%= item.email %>
+                                    </span>
+                                <% } %>
+                                <% if (item.betterId) { %>
+                                    <span class="detail-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke-width="2"/>
+                                            <line x1="1" y1="10" x2="23" y2="10" stroke-width="2"/>
+                                        </svg>
+                                        ID: <%= item.betterId %>
+                                    </span>
+                                <% } %>
+                            </div>
+                            <span class="feedback-date-large">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                    <polyline points="12 6 12 12 16 14" stroke-width="2"/>
+                                </svg>
+                                <%= new Date(item.createdAt).toLocaleString('en-GB', { 
+                                    day: 'numeric', 
+                                    month: 'short', 
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                }) %>
+                            </span>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
