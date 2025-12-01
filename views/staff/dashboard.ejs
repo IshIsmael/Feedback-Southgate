@@ -128,7 +128,7 @@
 
             <div class="panel rating-panel">
                 <div class="panel-header">
-                    <h3>Rating Distribution</h3>
+                    <h3>Feedback Urgency Distribution</h3>
                 </div>
                 <div class="panel-content">
                     <% if (ratingBreakdown.length === 0) { %>
@@ -136,7 +136,7 @@
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" opacity="0.3">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-width="2"/>
                             </svg>
-                            <p>No ratings in this period</p>
+                            <p>No feedback in this period</p>
                         </div>
                     <% } else { %>
                         <div class="rating-chart">
@@ -152,14 +152,14 @@
                                 <div class="rating-row">
                                     <div class="rating-label">
                                         <% if (rating === 5) { %>
-                                            <span class="rating-emoji happy">😊</span>
-                                            <span>Great</span>
+                                            <span class="rating-emoji happy">🏃</span>
+                                            <span>Urgent</span>
                                         <% } else if (rating === 3) { %>
-                                            <span class="rating-emoji neutral">😐</span>
-                                            <span>Okay</span>
+                                            <span class="rating-emoji neutral">🙋</span>
+                                            <span>Worth a look</span>
                                         <% } else { %>
-                                            <span class="rating-emoji sad">😞</span>
-                                            <span>Poor</span>
+                                            <span class="rating-emoji sad">🐌</span>
+                                            <span>Not Urgent</span>
                                         <% } %>
                                     </div>
                                     <div class="rating-bar">
@@ -204,11 +204,11 @@
                                     </div>
                                     <div class="feedback-rating rating-<%= feedback.rating %>">
                                         <% if (feedback.rating === 5) { %>
-                                            😊
+                                            🏃
                                         <% } else if (feedback.rating === 3) { %>
-                                            😐
+                                            🙋
                                         <% } else { %>
-                                            😞
+                                            🐌
                                         <% } %>
                                     </div>
                                 </div>
