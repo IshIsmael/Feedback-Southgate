@@ -9,15 +9,15 @@
 <body>
     <div class="container">
         <header>
-            <h1>We Value Your Feedback</h1>
-            <p class="subtitle">Help us improve your experience at Better Southgate Leisure Centre</p>
+            <h1>We Value Your Suggestions</h1>
+            <p class="subtitle">Help us improve everyones experience at Better Southgate Leisure Centre</p>
         </header>
 
         <% if (success) { %>
             <div class="success-message">
                 <h2>Thank You! 🎉</h2>
                 <p><%= success %></p>
-                <p class="small-text">Your feedback helps us serve you better.</p>
+                <p class="small-text">Your suggestions helps us serve you better.</p>
                 <a href="/" class="back-btn">Submit Another Feedback</a>
             </div>
         <% } else { %>
@@ -27,41 +27,40 @@
                     <h2>Your Visit</h2>
                     
                     <div class="form-group">
-                        <label for="activity">What did you do today? <span class="required">*</span></label>
+                        <label for="activity">What category are you wanting to provide a suggestion for? <span class="required">*</span></label>
                         <select id="activity" name="activity" required>
                             <option value="">Select an activity...</option>
-                            <option value="Fitness Class">Fitness Class</option>
-                            <option value="Swim for Fitness">Swim for Fitness</option>
-                            <option value="Swim for All">Swim for All</option>
+                            <option value="Fitness Class">Fitness Classes</option>
+                            <option value="Swim for Fitness">Swimming/Sauna & Steam</option>
+                            <option value="Swim for All">Swim School</option>
                             <option value="Gym">Gym</option>
-                            <option value="Table Tennis">Table Tennis</option>
-                            <option value="Health Suite">Sauna & Steam</option>
+                            <option value="Health Suite">Cleaning</option>
                             <option value="Cafe">Cafe</option>
-                            <option value="Multiple Activities">Multiple Activities</option>
+                            <option value="Multiple Activities">Something Else</option>
                         </select>
-                        <small class="help-text">If you select Fitness Class, please mention which class and time in comments</small>
+                        <small class="help-text">Please provide more information in your comments</small>
                     </div>
 
                     <div class="form-group">
-                        <label>How was your experience? <span class="required">*</span></label>
+                        <label>How important/urgent do you believe this is? <span class="required">*</span></label>
                         <div class="emoji-rating-wrapper">
                             <div class="emoji-rating-container">
                                 <input type="radio" id="sad" name="rating" value="1" required>
                                 <label for="sad" class="emoji-option sad-face">
-                                    <span class="emoji">😞</span>
-                                    <span class="emoji-label">Poor</span>
+                                    <span class="emoji"></span>
+                                    <span class="emoji-label">Not Urgent</span>
                                 </label>
                                 
                                 <input type="radio" id="neutral" name="rating" value="3">
                                 <label for="neutral" class="emoji-option neutral-face">
-                                    <span class="emoji">😐</span>
-                                    <span class="emoji-label">Okay</span>
+                                    <span class="emoji"></span>
+                                    <span class="emoji-label">Something To Look At</span>
                                 </label>
                                 
                                 <input type="radio" id="happy" name="rating" value="5">
                                 <label for="happy" class="emoji-option happy-face">
-                                    <span class="emoji">😊</span>
-                                    <span class="emoji-label">Great</span>
+                                    <span class="emoji"></span>
+                                    <span class="emoji-label">Urgent</span>
                                 </label>
                             </div>
                         </div>
@@ -76,22 +75,12 @@
                 </div>
 
                 <div class="form-section optional-section">
-                    <h2>Contact Details <span class="optional-badge">Optional</span></h2>
-                    <p class="small-text">Help us follow up with you (completely optional)</p>
+                    <h2>Contact Details <span class="optional-badge"></span></h2>
+                    <p class="small-text">Please Fill This In</p>
                     
                     <div class="form-group">
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" placeholder="Enter your name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" placeholder="your.email@example.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="betterId">Better Membership ID</label>
-                        <input type="text" id="betterId" name="betterId" placeholder="Enter your membership ID">
                     </div>
                 </div>
 
