@@ -97,11 +97,10 @@ router.get('/staff/dashboard', requireAuth, async function(req, res) {
 
     var totalFeedback = await Feedback.countDocuments(dateFilter);
     
-    var avgRatingResult = await Feedback.aggregate([
-      { $match: dateFilter },
-      { $group: { _id: null, avgRating: { $avg: '$rating' } } }
-    ]);
-    var avgRating = avgRatingResult.length > 0 ? avgRatingResult[0].avgRating : 0;
+    var mostUrgentFeedback = await Feedback.find(dateFilter)
+      .sort({ rating: -1, createdAt: -1 }) // highest urgency first
+      .limit(10);
+
     
     var activityBreakdown = await Feedback.aggregate([
       { $match: dateFilter },
@@ -121,7 +120,7 @@ router.get('/staff/dashboard', requireAuth, async function(req, res) {
 
     res.render('staff/dashboard', {
       totalFeedback: totalFeedback,
-      avgRating: avgRating.toFixed(1),
+      mostUrgentFeedback: mostUrgentFeedback,
       activityBreakdown: activityBreakdown,
       ratingBreakdown: ratingBreakdown,
       recentFeedback: recentFeedback,
